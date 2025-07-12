@@ -43,10 +43,17 @@ class PagesController extends AppController
      *   be found and not in debug mode.
      * @throws \Cake\View\Exception\MissingTemplateException In debug mode.
      */
+    public function index()
+    {
+        $this->Authorization->skipAuthorization(); // <- isso evita o erro
+
+        $tags = $this->paginate($this->Tags);
+        $this->set(compact('tags'));
+    }
+
     public function display(string ...$path): ?Response
     {
-        $this->Authorization->skipAuthorization();
-
+       $this->Authorization->skipAuthorization();
         if (!$path) {
             return $this->redirect('/');
         }
