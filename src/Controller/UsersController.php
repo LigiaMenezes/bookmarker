@@ -18,6 +18,8 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
+
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
@@ -32,6 +34,8 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
+
         $user = $this->Users->get($id, [
             'contain' => ['Bookmarks'],
         ]);
@@ -55,6 +59,8 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+        $this->Authorization->skipAuthorization();
+
         $user = $this->Users->get($id, [
             'contain' => [],
         ]);
@@ -79,6 +85,8 @@ class UsersController extends AppController
      */
     public function delete($id = null)
     {
+        $this->Authorization->skipAuthorization();
+
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
@@ -91,6 +99,8 @@ class UsersController extends AppController
     }
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
+        $this->Authorization->skipAuthorization();
+
         parent::beforeFilter($event);
         // Permite que a ação add (cadastro) seja acessada sem login
         $this->Auth->allow(['add']);
@@ -98,6 +108,8 @@ class UsersController extends AppController
 
     public function login()
     {
+        $this->Authorization->skipAuthorization();
+
         $user = $this->Users->newEmptyEntity();
     
         if ($this->request->is('post')) {
@@ -115,12 +127,16 @@ class UsersController extends AppController
     
     public function logout()
     {
+        $this->Authorization->skipAuthorization();
+
         $this->Flash->success('Você saiu com sucesso.');
         return $this->redirect($this->Auth->logout());
     }
 
     public function add()
     {
+        $this->Authorization->skipAuthorization();
+
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
