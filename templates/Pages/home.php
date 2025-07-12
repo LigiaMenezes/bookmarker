@@ -102,7 +102,6 @@ endif;
         <ul>
             <li><?= $this->Html->link('Ver todos os bookmarks', ['controller' => 'Bookmarks', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link('Adicionar novo bookmark', ['controller' => 'Bookmarks', 'action' => 'add']) ?></li>
-            <li><?= $this->Html->link('Visualizar tags', ['controller' => 'Tags', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link('Entrar (login)', ['controller' => 'Users', 'action' => 'login']) ?></li>
             <li><?= $this->Html->link('Criar conta', ['controller' => 'Users', 'action' => 'add']) ?></li>
         </ul>
