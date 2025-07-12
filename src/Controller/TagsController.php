@@ -1,37 +1,25 @@
-<?php
-declare(strict_types=1);
-
+<?php 
 namespace App\Controller;
 
-/**
- * Tags Controller
- *
- * @property \App\Model\Table\TagsTable $Tags
- * @method \App\Model\Entity\Tag[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
 class TagsController extends AppController
 {
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
     public function index()
     {
-        $tags = $this->paginate($this->Tags);
+        $this->Authorization->skipAuthorization();
 
+        $tags = $this->paginate($this->Tags);
         $this->set(compact('tags'));
     }
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authorization->skipAuthorization();
+    }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Tag id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
+
         $tag = $this->Tags->get($id, [
             'contain' => ['Bookmarks'],
         ]);
@@ -39,13 +27,10 @@ class TagsController extends AppController
         $this->set(compact('tag'));
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
     public function add()
     {
+        $this->Authorization->skipAuthorization();
+
         $tag = $this->Tags->newEmptyEntity();
         if ($this->request->is('post')) {
             $tag = $this->Tags->patchEntity($tag, $this->request->getData());
@@ -60,15 +45,10 @@ class TagsController extends AppController
         $this->set(compact('tag', 'bookmarks'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Tag id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
+        $this->Authorization->skipAuthorization();
+
         $tag = $this->Tags->get($id, [
             'contain' => ['Bookmarks'],
         ]);
@@ -85,15 +65,10 @@ class TagsController extends AppController
         $this->set(compact('tag', 'bookmarks'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Tag id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
+        $this->Authorization->skipAuthorization();
+
         $this->request->allowMethod(['post', 'delete']);
         $tag = $this->Tags->get($id);
         if ($this->Tags->delete($tag)) {
@@ -105,3 +80,4 @@ class TagsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 }
+?>
